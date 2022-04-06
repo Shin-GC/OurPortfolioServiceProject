@@ -14,6 +14,7 @@ import {
   paramsValidate,
 } from "../middlewares/checkMiddleware.js";
 import { transPort } from "../utils/mailer.js";
+// env 파일 사용을 위한 설정
 dotenv.config();
 
 const userAuthRouter = Router();
@@ -26,7 +27,7 @@ userAuthRouter.post(
   async function (req, res, next) {
     try {
       const newUser = await UserAuthService.addUser({
-        ...req.toPost
+        ...req.toPost,
       });
 
       const user = fieldChecking(
@@ -40,7 +41,7 @@ userAuthRouter.post(
 
       const body = {
         success: true,
-        user
+        user,
       };
 
       res.status(201).json(body);
@@ -60,20 +61,17 @@ userAuthRouter.post(
 
       const body = {
         success: true,
-        user
+        user,
       };
 
       res.status(200).json(body);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   }
 );
 
-userAuthRouter.get(
-  "/users",
-  loginRequired,
-  async function (req, res, next) {
+userAuthRouter.get("/users", loginRequired, async function (req, res, next) {
   try {
     // 전체 사용자 목록을 얻음
     const users = await UserAuthService.getUsers();
@@ -136,7 +134,13 @@ userAuthRouter.put(
   "/users",
   loginRequired,
   checkUpdate,
-  commonMiddleware.checkRequestBody("name", "password", "description", "permission", "sns"),
+  commonMiddleware.checkRequestBody(
+    "name",
+    "password",
+    "description",
+    "permission",
+    "sns"
+  ),
   async function (req, res, next) {
     try {
       // 토큰에서 사용자 id를 추출함.
