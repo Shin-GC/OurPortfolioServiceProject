@@ -8,7 +8,6 @@ import { projectRouter } from "./routers/projectRouter.js";
 import { careerRouter } from "./routers/careerRouter.js";
 import { techRouter } from "./routers/techRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
-
 import { multerRouter } from "./routers/multerRouter.js";
 import morgan from "morgan";
 const app = express();
@@ -24,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
 // 기본 페이지
 app.get("/", (req, res) => {
-  res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
+  res.send("express 백엔드 서버 동작");
 });
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
